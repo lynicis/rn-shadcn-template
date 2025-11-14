@@ -1,0 +1,22 @@
+{
+  "signUp": {
+    "headerTitle": "Sign Up"
+  },
+  "signIn": {
+    "headerTitle": "Sign In"
+  },
+  "forgotPassword": {
+    "headerTitle": "Forgot Password"
+  },
+  "onboarding": {
+    "headerTitle": "Onboarding",
+    "title": "Onboarding",
+    "loginWithEmailButton": "Sign in with email",
+    "seperator": "or"
+  },
+  "notFound": {
+    "headerTitle": "Oops!",
+    "title": "This screen doesn't exists!",
+    "goBackToSignUpButton": "Go back to sign up"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "aliases": {
+    "hooks": "./hooks"
+  },
+  "tailwind": {
+    "config": "./tailwind.config.js",
+    "css": "./app/globals.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  }
+}

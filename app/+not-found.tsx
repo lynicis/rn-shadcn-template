@@ -1,26 +1,20 @@
-import { Link, Stack } from 'expo-router';
-
 import { Text, View } from 'react-native';
+import { Stack, Link } from 'expo-router';
 
-import { Container } from '@/components/Container';
+import i18n from '@/locales';
 
 export default function NotFoundScreen() {
   return (
-    <View className={styles.container}>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <Container>
-        <Text className={styles.title}>{"This screen doesn't exist."}</Text>
-        <Link href="/" className={styles.link}>
-          <Text className={styles.linkText}>Go to home screen!</Text>
+    <View className="flex flex-1 bg-white">
+      <Stack.Screen options={{ title: i18n.t('notFound.headerTitle') }} />
+      <View className="flex flex-1 bg-white">
+        <Text className="text-xl font-bold">{i18n.t('notFound.title')}</Text>
+        <Link href="/(auth)" className="mt-4 pt-4">
+          <Text className="text-base text-[#2e78b7]">
+            {i18n.t('notFound.goBackToSignUpButton')}
+          </Text>
         </Link>
-      </Container>
+      </View>
     </View>
   );
 }
-
-const styles = {
-  container: `flex flex-1 bg-white`,
-  title: `text-xl font-bold`,
-  link: `mt-4 pt-4`,
-  linkText: `text-base text-[#2e78b7]`,
-};

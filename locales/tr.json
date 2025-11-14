@@ -1,0 +1,22 @@
+{
+  "signUp": {
+    "headerTitle": "Kayıt Ol"
+  },
+  "signIn": {
+    "headerTitle": "Giriş Yap"
+  },
+  "forgotPassword": {
+    "headerTitle": "Şifremi Unuttum"
+  },
+  "onboarding": {
+    "headerTitle": "Onboarding",
+    "title": "Onboarding",
+    "loginWithEmailButton": "E-post ile giriş yap",
+    "seperator": "veya"
+  },
+  "notFound": {
+    "headerTitle": "Oops!",
+    "title": "Bu sayfa bulunamadı!",
+    "goBackToSignUpButton": "Kayıt ol sayfasına geri dön"
+  }
+}

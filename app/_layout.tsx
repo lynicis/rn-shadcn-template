@@ -1,7 +1,61 @@
 import '../global.css';
 
+import { ThemeProvider } from '@react-navigation/native';
+import { PortalHost } from '@rn-primitives/portal';
+import { useColorScheme } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
+
+import { useIsMounted } from '@/hooks/use-is-mounted';
+import { supabase } from '@/utils/supabase';
+import { useUserStore } from '@/store/user';
+import { NAV_THEME } from '@/lib/theme';
+
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
 
 export default function Layout() {
-  return <Stack />;
+  const colorScheme = useColorScheme() || 'light';
+  const { isUserAuthenticated, setUser, setSession } = useUserStore();
+  const isMounted = useIsMounted();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const isAuthenticated = isUserAuthenticated();
+      if (isAuthenticated) {
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
+        if (userError) {
+          return;
+        }
+
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
+        if (sessionError) {
+          return;
+        }
+
+        setUser(user);
+        setSession(session);
+      }
+    };
+
+    if (isMounted()) {
+      checkAuth();
+    }
+  }, [isMounted, isUserAuthenticated, setUser, setSession]);
+
+  return (
+    <ThemeProvider value={NAV_THEME[colorScheme]}>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <Stack />
+      <PortalHost />
+    </ThemeProvider>
+  );
 }
