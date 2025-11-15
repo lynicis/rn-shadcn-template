@@ -22,6 +22,7 @@
     "@rn-primitives/separator": "^1.2.0",
     "@rn-primitives/slot": "^1.2.0",
     "@rn-primitives/toggle": "^1.2.0",
+    "@sentry/react-native": "^7.6.0",
     "@supabase/supabase-js": "^2.38.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -20,6 +20,14 @@
             "android": ["en", "tr"]
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "<your-project-name>",
+          "organization": "<your-org>"
+        }
       ]
     ],
     "experiments": {
