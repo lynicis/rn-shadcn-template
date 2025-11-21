@@ -1,10 +1,13 @@
 {
   "expo": {
-    "name": "pee-spot",
-    "slug": "pee-spot",
+    "name": "rn-shadcn",
+    "slug": "rn-shadcn",
     "version": "1.0.0",
-    "scheme": "pee-spot",
-    "platforms": ["ios", "android"],
+    "scheme": "rnshadcn",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -16,8 +19,14 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["en", "tr"],
-            "android": ["en", "tr"]
+            "ios": [
+              "en",
+              "tr"
+            ],
+            "android": [
+              "en",
+              "tr"
+            ]
           }
         }
       ],
@@ -27,6 +36,13 @@
           "url": "https://sentry.io/",
           "project": "<your-project-name>",
           "organization": "<your-org>"
+        }
+      ],
+      "expo-apple-authentication",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.<client_id>"
         }
       ]
     ],
@@ -42,15 +58,26 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "CFBundleLocalizations": [
+          "en",
+          "tr"
+        ]
+      },
+      "bundleIdentifier": "com.anonymous.rnshadcn"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.rnshadcn"
     }
   }
 }
