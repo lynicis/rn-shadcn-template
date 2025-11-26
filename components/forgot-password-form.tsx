@@ -1,5 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Linking from 'expo-linking';
+import { toast } from 'sonner-native';
 import { View } from 'react-native';
 import { z } from 'zod/v4';
 
@@ -8,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
+import { supabase } from '@/utils/supabase';
 import i18n from '@/locales';
 
 const schema = z.object({
@@ -23,9 +26,26 @@ export function ForgotPasswordForm() {
     control,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm({ resolver: zodResolver(schema) });
+  } = useForm<ISchema>({ resolver: zodResolver(schema) });
 
-  function onSubmit(data: ISchema) {}
+  async function onSubmit(data: ISchema) {
+    try {
+      const redirectTo = Linking.createURL('/reset-password');
+
+      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+        redirectTo,
+      });
+
+      if (error) {
+        toast.error(i18n.t('forgotPassword.errorGeneric'));
+        return;
+      }
+
+      toast.success(i18n.t('forgotPassword.success'));
+    } catch {
+      toast.error(i18n.t('forgotPassword.errorGeneric'));
+    }
+  }
 
   return (
     <View className="gap-6">

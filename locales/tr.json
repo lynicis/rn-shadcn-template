@@ -44,10 +44,20 @@
     "emailLabel": "E-posta",
     "emailPlaceholder": "m@ornek.com",
     "button": "Şifreni sıfırla",
+    "success": "Eğer bu e-posta ile kayıtlı bir hesap varsa, sıfırlama bağlantısı gönderildi.",
+    "errorGeneric": "Şifre sıfırlama isteği sırasında bir hata oluştu.",
     "validation": {
       "emailInvalid": "Geçersiz e-posta adresi",
       "emailRequired": "E-posta zorunludur"
     }
+  },
+  "resetPassword": {
+    "headerTitle": "Şifreyi Sıfırla",
+    "description": "Hesabın için yeni bir şifre belirle",
+    "passwordLabel": "Yeni şifre",
+    "button": "Şifreyi sıfırla",
+    "success": "Şifren güncellendi. Artık giriş yapabilirsin.",
+    "errorGeneric": "Şifre güncellenirken bir hata oluştu."
   },
   "onboarding": {
     "headerTitle": "Onboarding",

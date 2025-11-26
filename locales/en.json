@@ -44,10 +44,20 @@
     "emailLabel": "Email",
     "emailPlaceholder": "m@example.com",
     "button": "Reset your password",
+    "success": "If an account exists for that email, a reset link has been sent.",
+    "errorGeneric": "Error occurred while requesting password reset.",
     "validation": {
       "emailInvalid": "Invalid email address",
       "emailRequired": "Email is required"
     }
+  },
+  "resetPassword": {
+    "headerTitle": "Reset password",
+    "description": "Set a new password for your account",
+    "passwordLabel": "New password",
+    "button": "Reset password",
+    "success": "Your password has been updated. You can now sign in.",
+    "errorGeneric": "Error occurred while updating your password."
   },
   "onboarding": {
     "headerTitle": "Onboarding",
