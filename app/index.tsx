@@ -1,5 +1,5 @@
+import { useRouter, Stack, Link } from 'expo-router';
 import { ScrollView, View } from 'react-native';
-import { useRouter, Stack } from 'expo-router';
 import { Mail } from 'lucide-react-native';
 
 import { SocialConnections } from '@/components/social-connections';
@@ -33,8 +33,16 @@ export default function OnboardingScreen() {
             <Separator />
           </View>
         </View>
-        <View className="w-full">
+        <View className="w-full gap-4">
           <SocialConnections />
+          <View className="flex-row justify-center gap-1">
+            <Text className="text-muted-foreground">
+              {i18n.t('onboarding.haveAccountQuestion')}
+            </Text>
+            <Link className="mt-1 font-semibold text-primary underline" href="/(auth)/sign-in">
+              {i18n.t('onboarding.signInLink')}
+            </Link>
+          </View>
         </View>
       </View>
     </ScrollView>

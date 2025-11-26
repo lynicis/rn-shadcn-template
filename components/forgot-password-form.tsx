@@ -1,16 +1,19 @@
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { View } from 'react-native';
-import * as z from 'zod/v4-mini';
+import { z } from 'zod/v4';
 
 import { CardDescription, CardContent, CardHeader, CardTitle, Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
+import i18n from '@/locales';
 
 const schema = z.object({
-  email: z.email('Invalid email address'),
+  email: z
+    .email(i18n.t('forgotPassword.validation.emailInvalid'))
+    .min(1, i18n.t('forgotPassword.validation.emailRequired')),
 });
 
 type ISchema = z.infer<typeof schema>;
@@ -28,22 +31,24 @@ export function ForgotPasswordForm() {
     <View className="gap-6">
       <Card className="border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
-          <CardTitle className="text-center text-xl sm:text-left">Forgot password?</CardTitle>
+          <CardTitle className="text-center text-xl sm:text-left">
+            {i18n.t('forgotPassword.headerTitle')}
+          </CardTitle>
           <CardDescription className="text-center sm:text-left">
-            Enter your email to reset your password
+            {i18n.t('forgotPassword.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
           <View className="gap-6">
             <View className="gap-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{i18n.t('forgotPassword.emailLabel')}</Label>
               <Controller
                 control={control}
                 name="email"
                 render={({ field: { onBlur, onChange, value } }) => (
                   <Input
                     id="email"
-                    placeholder="m@example.com"
+                    placeholder={i18n.t('forgotPassword.emailPlaceholder')}
                     keyboardType="email-address"
                     autoComplete="email"
                     autoCapitalize="none"
@@ -58,7 +63,7 @@ export function ForgotPasswordForm() {
               {errors.email && <Text variant="danger">{errors.email.message}</Text>}
             </View>
             <Button className="w-full" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
-              <Text>Reset your password</Text>
+              <Text>{i18n.t('forgotPassword.button')}</Text>
             </Button>
           </View>
         </CardContent>

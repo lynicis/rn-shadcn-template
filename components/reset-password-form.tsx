@@ -1,5 +1,5 @@
 import { TextInput, View } from 'react-native';
-import * as React from 'react';
+import { useRef } from 'react';
 
 import { CardDescription, CardContent, CardHeader, CardTitle, Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
 
 export function ResetPasswordForm() {
-  const codeInputRef = React.useRef<TextInput>(null);
+  const codeInputRef = useRef<TextInput>(null);
 
   function onSubmit() {
     // TODO: Submit form and navigate to protected screen if successful

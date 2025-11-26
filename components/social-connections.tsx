@@ -5,15 +5,18 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import { SplashScreen, useRouter } from 'expo-router';
 import { Platform, Image, View } from 'react-native';
 import { useColorScheme } from 'nativewind';
-import { useRouter } from 'expo-router';
+import { toast } from 'sonner-native';
 
+import { useSecureEnv } from '@/hooks/use-secure-env';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/utils/supabase';
 import { useUserStore } from '@/store/user';
 import { expo } from '@/app.json';
 import { cn } from '@/lib/utils';
+import i18n from '@/locales';
 
 const SOCIAL_CONNECTION_STRATEGIES = [
   {
@@ -28,15 +31,23 @@ const SOCIAL_CONNECTION_STRATEGIES = [
   },
 ];
 
-GoogleSignin.configure({
-  webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
-  iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
-});
+SplashScreen.preventAutoHideAsync();
 
 export function SocialConnections() {
+  const { values, isLoading } = useSecureEnv();
+  GoogleSignin.configure({
+    webClientId: values.googleWebClientId ?? '',
+    iosClientId: values.googleIosClientId ?? '',
+  });
+
   const { colorScheme } = useColorScheme();
   const router = useRouter();
+
   const { setUser, setSession } = useUserStore();
+
+  if (!isLoading) {
+    SplashScreen.hideAsync();
+  }
 
   const nativeSignInWithApple = async () => {
     try {
@@ -48,7 +59,7 @@ export function SocialConnections() {
       });
 
       if (credential.identityToken) {
-        const { error: signInWithAppleError } = await supabase.auth.signInWithIdToken({
+        const { data, error: signInWithAppleError } = await supabase.auth.signInWithIdToken({
           provider: 'apple',
           token: credential.identityToken,
         });
@@ -69,11 +80,17 @@ export function SocialConnections() {
               },
             });
           }
+
+          setUser(data.user);
+          setSession(data.session);
+          toast.success(i18n.t('signIn.success'));
+          setTimeout(() => router.push('/(dashboard)'), 600);
         }
       }
-    } catch {
-      /* if (error.code !== 'ERR_REQUEST_CANCELED') {
-      } */
+    } catch (error) {
+      if ((error as { code?: string }).code !== 'ERR_REQUEST_CANCELED') {
+        toast.error(i18n.t('signIn.errorGeneric'));
+      }
     }
   };
 
@@ -108,36 +125,21 @@ export function SocialConnections() {
         });
 
         if (signInWithGoogleError) {
-          console.error('Supabase sign-in error:', signInWithGoogleError);
-          return;
+          return toast.error(i18n.t('signIn.errorGeneric'));
         }
 
         if (data?.user && data?.session) {
           setUser(data.user);
           setSession(data.session);
-          router.push('/(dashboard)');
+          toast.success(i18n.t('signIn.success'));
+          setTimeout(() => router.push('/(dashboard)'), 600);
         }
       }
     } catch (error) {
       if (isErrorWithCode(error)) {
-        switch (error.code) {
-          case statusCodes.SIGN_IN_CANCELLED:
-            // User cancelled the login flow
-            console.log('Google sign-in cancelled');
-            break;
-          case statusCodes.IN_PROGRESS:
-            // operation (eg. sign in) already in progress
-            console.log('Google sign-in already in progress');
-            break;
-          case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            // Android only, play services not available or outdated
-            console.error('Play services not available');
-            break;
-          default:
-            console.error('Google sign-in error:', error);
+        if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          toast.error(i18n.t('signIn.playServicesNotAvailable'));
         }
-      } else {
-        console.error('Unexpected Google sign-in error:', error);
       }
     }
   };

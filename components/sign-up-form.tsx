@@ -14,19 +14,22 @@ import { supabase } from '@/utils/supabase';
 import { useUserStore } from '@/store/user';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
+import i18n from '@/locales';
 
 import { SocialConnections } from './social-connections';
 import { Separator } from './ui/separator';
 
 const schema = z
   .object({
-    email: z.email('Invalid email address').min(1, 'Email is required'),
-    password: z.string().min(6, 'Password must be at least 6 characters long'),
-    repeatPassword: z.string().min(6, 'Password must be at least 6 characters long'),
+    email: z
+      .email(i18n.t('signUp.validation.emailInvalid'))
+      .min(1, i18n.t('signUp.validation.emailRequired')),
+    password: z.string().min(6, i18n.t('signUp.validation.passwordMin')),
+    repeatPassword: z.string().min(6, i18n.t('signUp.validation.passwordMin')),
   })
   .refine((data) => data.password === data.repeatPassword, {
     path: ['repeatPassword'],
-    message: 'Passwords do not match',
+    message: i18n.t('signUp.validation.passwordsDontMatch'),
   });
 
 type ISchema = z.infer<typeof schema>;
@@ -66,7 +69,7 @@ export function SignUpForm() {
         return router.push('/(dashboard)');
       }
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'An unexpected error occurred');
+      setSubmitError(error instanceof Error ? error.message : i18n.t('signUp.errorGeneric'));
     }
   };
 
@@ -74,22 +77,24 @@ export function SignUpForm() {
     <View className="gap-6">
       <Card className="border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
-          <CardTitle className="text-center text-xl sm:text-left">Create your account</CardTitle>
+          <CardTitle className="text-center text-xl sm:text-left">
+            {i18n.t('signUp.headerTitle')}
+          </CardTitle>
           <CardDescription className="text-center sm:text-left">
-            Welcome! Please fill in the details to get started.
+            {i18n.t('signUp.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
           <View className="gap-6">
             <View className="gap-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{i18n.t('signUp.emailLabel')}</Label>
               <Controller
                 control={control}
                 name="email"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
                     id="email"
-                    placeholder="m@example.com"
+                    placeholder={i18n.t('signUp.emailPlaceholder')}
                     keyboardType="email-address"
                     autoComplete="email"
                     autoCapitalize="none"
@@ -107,7 +112,7 @@ export function SignUpForm() {
             </View>
             <View className="gap-1.5">
               <View className="flex-row items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{i18n.t('signUp.passwordLabel')}</Label>
               </View>
               <Controller
                 control={control}
@@ -145,7 +150,7 @@ export function SignUpForm() {
             </View>
             <View className="gap-1.5">
               <View className="flex-row items-center">
-                <Label htmlFor="repeatPassword">Repeat Password</Label>
+                <Label htmlFor="repeatPassword">{i18n.t('signUp.repeatPasswordLabel')}</Label>
               </View>
               <Controller
                 control={control}
@@ -185,18 +190,20 @@ export function SignUpForm() {
             </View>
             {submitError && <Text variant="danger">{submitError}</Text>}
             <Button className="w-full" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
-              <Text>Continue</Text>
+              <Text>{i18n.t('signUp.button')}</Text>
             </Button>
           </View>
           <Text className="text-center text-sm">
-            Already have an account?{' '}
+            {i18n.t('signUp.haveAccountQuestion')}{' '}
             <Link href="/(auth)/sign-in">
-              <Text className="text-sm underline underline-offset-4">Sign in</Text>
+              <Text className="text-sm underline underline-offset-4">
+                {i18n.t('signUp.signInLink')}
+              </Text>
             </Link>
           </Text>
           <View className="flex-row items-center">
             <Separator className="flex-1" />
-            <Text className="px-4 text-sm text-muted-foreground">or</Text>
+            <Text className="px-4 text-sm text-muted-foreground">{i18n.t('signUp.or')}</Text>
             <Separator className="flex-1" />
           </View>
           <SocialConnections />

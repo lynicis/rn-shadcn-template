@@ -1,18 +1,61 @@
 {
   "signUp": {
-    "headerTitle": "Sign Up"
+    "headerTitle": "Sign Up",
+    "description": "Welcome! Please fill in the details to get started.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "m@example.com",
+    "passwordLabel": "Password",
+    "repeatPasswordLabel": "Repeat Password",
+    "button": "Continue",
+    "haveAccountQuestion": "Already have an account?",
+    "signInLink": "Sign in",
+    "or": "or",
+    "errorGeneric": "An unexpected error occurred",
+    "validation": {
+      "emailInvalid": "Invalid email address",
+      "emailRequired": "Email is required",
+      "passwordMin": "Password must be at least 6 characters long",
+      "passwordsDontMatch": "Passwords do not match"
+    }
   },
   "signIn": {
-    "headerTitle": "Sign In"
+    "headerTitle": "Sign in to your app",
+    "description": "Welcome back! Please sign in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "m@example.com",
+    "passwordLabel": "Password",
+    "forgotPassword": "Forgot your password?",
+    "button": "Continue",
+    "noAccountQuestion": "Don't have an account?",
+    "signUpLink": "Sign up",
+    "or": "or",
+    "errorGeneric": "Error occurred while signing...",
+    "success": "Successfully signed in!",
+    "playServicesNotAvailable": "Google Play Services is not available or needs to be updated on this device.",
+    "validation": {
+      "emailInvalid": "Invalid email address",
+      "emailRequired": "Email is required",
+      "passwordMin": "Password must be at least 8 characters long"
+    }
   },
   "forgotPassword": {
-    "headerTitle": "Forgot Password"
+    "headerTitle": "Forgot password?",
+    "description": "Enter your email to reset your password",
+    "emailLabel": "Email",
+    "emailPlaceholder": "m@example.com",
+    "button": "Reset your password",
+    "validation": {
+      "emailInvalid": "Invalid email address",
+      "emailRequired": "Email is required"
+    }
   },
   "onboarding": {
     "headerTitle": "Onboarding",
     "title": "Onboarding",
     "loginWithEmailButton": "Sign in with email",
-    "seperator": "or"
+    "seperator": "or",
+    "haveAccountQuestion": "Do you have an account?",
+    "signInLink": "Sign In"
   },
   "notFound": {
     "headerTitle": "Oops!",

@@ -4,10 +4,7 @@
     "slug": "rn-shadcn",
     "version": "1.0.0",
     "scheme": "rnshadcn",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -19,14 +16,8 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": [
-              "en",
-              "tr"
-            ],
-            "android": [
-              "en",
-              "tr"
-            ]
+            "ios": ["en", "tr"],
+            "android": ["en", "tr"]
           }
         }
       ],
@@ -58,17 +49,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "infoPlist": {
-        "CFBundleLocalizations": [
-          "en",
-          "tr"
-        ]
+        "CFBundleLocalizations": ["en", "tr"]
       },
       "bundleIdentifier": "com.anonymous.rnshadcn"
     },

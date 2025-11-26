@@ -1,18 +1,61 @@
 {
   "signUp": {
-    "headerTitle": "Kayıt Ol"
+    "headerTitle": "Kayıt Ol",
+    "description": "Hoş geldin! Başlamak için lütfen bilgilerini doldur.",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "m@ornek.com",
+    "passwordLabel": "Şifre",
+    "repeatPasswordLabel": "Şifreyi tekrar gir",
+    "button": "Devam et",
+    "haveAccountQuestion": "Zaten bir hesabın var mı?",
+    "signInLink": "Giriş Yap",
+    "or": "veya",
+    "errorGeneric": "Beklenmeyen bir hata oluştu",
+    "validation": {
+      "emailInvalid": "Geçersiz e-posta adresi",
+      "emailRequired": "E-posta zorunludur",
+      "passwordMin": "Şifre en az 6 karakter olmalıdır",
+      "passwordsDontMatch": "Şifreler eşleşmiyor"
+    }
   },
   "signIn": {
-    "headerTitle": "Giriş Yap"
+    "headerTitle": "Uygulamana giriş yap",
+    "description": "Tekrar hoş geldin! Devam etmek için lütfen giriş yap",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "m@ornek.com",
+    "passwordLabel": "Şifre",
+    "forgotPassword": "Şifreni mi unuttun?",
+    "button": "Devam et",
+    "noAccountQuestion": "Hesabın yok mu?",
+    "signUpLink": "Kayıt ol",
+    "or": "veya",
+    "errorGeneric": "Giriş yapılırken bir hata oluştu...",
+    "success": "Başarıyla giriş yapıldı!",
+    "playServicesNotAvailable": "Google Play Hizmetleri bu cihazda kullanılamıyor veya güncel değil.",
+    "validation": {
+      "emailInvalid": "Geçersiz e-posta adresi",
+      "emailRequired": "E-posta zorunludur",
+      "passwordMin": "Şifre en az 8 karakter olmalıdır"
+    }
   },
   "forgotPassword": {
-    "headerTitle": "Şifremi Unuttum"
+    "headerTitle": "Şifremi Unuttum",
+    "description": "Şifreni sıfırlamak için e-posta adresini gir",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "m@ornek.com",
+    "button": "Şifreni sıfırla",
+    "validation": {
+      "emailInvalid": "Geçersiz e-posta adresi",
+      "emailRequired": "E-posta zorunludur"
+    }
   },
   "onboarding": {
     "headerTitle": "Onboarding",
     "title": "Onboarding",
     "loginWithEmailButton": "E-post ile giriş yap",
-    "seperator": "veya"
+    "seperator": "veya",
+    "haveAccountQuestion": "Zaten bir hesabın var mı?",
+    "signInLink": "Giriş Yap"
   },
   "notFound": {
     "headerTitle": "Oops!",

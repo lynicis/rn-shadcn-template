@@ -1,6 +1,8 @@
 import '../global.css';
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as QueryParams from 'expo-auth-session/build/QueryParams';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SplashScreen, useRouter, Stack } from 'expo-router';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
@@ -9,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'nativewind';
 import * as Linking from 'expo-linking';
+import { Toaster } from 'sonner-native';
 
 import { supabase } from '@/utils/supabase';
 import { useUserStore } from '@/store/user';
@@ -108,10 +111,15 @@ export default Sentry.wrap(function Layout() {
   }, [isUserAuthenticated, setUser, setSession, router]);
 
   return (
-    <ThemeProvider value={NAV_THEME[colorScheme]}>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <Stack />
-      <PortalHost />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <GestureHandlerRootView>
+        <ThemeProvider value={NAV_THEME[colorScheme]}>
+          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <Stack />
+          <PortalHost />
+          <Toaster />
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 });
