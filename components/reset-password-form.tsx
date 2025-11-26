@@ -66,6 +66,7 @@ export function ResetPasswordForm() {
                 name="password"
                 render={({ field: { onBlur, onChange, value } }) => (
                   <Input
+                    testID="password-input"
                     ref={passwordInputRef}
                     id="password"
                     secureTextEntry
@@ -73,7 +74,7 @@ export function ResetPasswordForm() {
                     submitBehavior="submit"
                     onSubmitEditing={handleSubmit(onSubmit)}
                     onBlur={onBlur}
-                    onChange={onChange}
+                    onChangeText={onChange}
                     value={value}
                     editable={!isSubmitting}
                   />
@@ -81,7 +82,12 @@ export function ResetPasswordForm() {
               />
               {errors.password && <Text variant="danger">{errors.password.message}</Text>}
             </View>
-            <Button className="w-full" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
+            <Button
+              testID="submit-button"
+              className="w-full"
+              onPress={handleSubmit(onSubmit)}
+              isLoading={isSubmitting}
+            >
               <Text>{i18n.t('resetPassword.button')}</Text>
             </Button>
           </View>

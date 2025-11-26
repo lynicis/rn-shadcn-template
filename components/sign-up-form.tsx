@@ -101,7 +101,7 @@ export function SignUpForm() {
                     onSubmitEditing={() => passwordInputRef.current?.focus()}
                     returnKeyType="next"
                     submitBehavior="submit"
-                    onChange={onChange}
+                    onChangeText={onChange}
                     onBlur={onBlur}
                     value={value}
                     editable={!isSubmitting}
@@ -122,9 +122,10 @@ export function SignUpForm() {
                     <Input
                       ref={passwordInputRef}
                       id="password"
+                      testID="password-input"
                       secureTextEntry={!showPassword}
                       returnKeyType="next"
-                      onChange={onChange}
+                      onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
                       onSubmitEditing={() => repeatPasswordInputRef.current?.focus()}
@@ -160,9 +161,10 @@ export function SignUpForm() {
                     <Input
                       ref={repeatPasswordInputRef}
                       id="repeatPassword"
+                      testID="repeat-password-input"
                       secureTextEntry={!showRepeatPassword}
                       returnKeyType="send"
-                      onChange={onChange}
+                      onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
                       onSubmitEditing={handleSubmit(onSubmit)}

@@ -84,7 +84,7 @@ export function SignInForm() {
                     onSubmitEditing={() => passwordInputRef.current?.focus()}
                     returnKeyType="next"
                     submitBehavior="submit"
-                    onChange={onChange}
+                    onChangeText={onChange}
                     onBlur={onBlur}
                     value={value}
                   />
@@ -108,11 +108,12 @@ export function SignInForm() {
                 name="password"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
+                    testID="password-input"
                     ref={passwordInputRef}
                     id="password"
                     secureTextEntry
                     returnKeyType="send"
-                    onChange={onChange}
+                    onChangeText={onChange}
                     onBlur={onBlur}
                     value={value}
                     onSubmitEditing={handleSubmit(onSubmit)}
@@ -121,7 +122,11 @@ export function SignInForm() {
               />
               {errors.password && <Text variant="danger">{errors.password.message}</Text>}
             </View>
-            <Button className="w-full" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
+            <Button
+              testID="submit-button"
+              className="w-full"
+              onPress={handleSubmit(onSubmit)}
+              isLoading={isSubmitting}>
               <Text>{i18n.t('signIn.button')}</Text>
             </Button>
           </View>

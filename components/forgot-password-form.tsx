@@ -76,7 +76,7 @@ export function ForgotPasswordForm() {
                     onSubmitEditing={handleSubmit(onSubmit)}
                     value={value}
                     onBlur={onBlur}
-                    onChange={onChange}
+                    onChangeText={onChange}
                   />
                 )}
               />
