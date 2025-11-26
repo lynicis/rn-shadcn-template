@@ -62,7 +62,7 @@
   "onboarding": {
     "headerTitle": "Onboarding",
     "title": "Onboarding",
-    "loginWithEmailButton": "E-post ile giriş yap",
+    "registerWithEmailButton": "E-posta ile kayıt ol",
     "seperator": "veya",
     "haveAccountQuestion": "Zaten bir hesabın var mı?",
     "signInLink": "Giriş Yap"

@@ -20,9 +20,9 @@ export default function OnboardingScreen() {
       <View className="w-full max-w-sm gap-4">
         <Stack.Screen options={{ title: i18n.t('onboarding.headerTitle') }} />
         <Text className="text-center text-2xl font-bold">{i18n.t('onboarding.title')}</Text>
-        <Button onPress={() => router.push('/(auth)/sign-in')} className="w-full">
+        <Button onPress={() => router.push('/(auth)')} className="w-full">
           <Icon as={Mail} size={16} color="white" />
-          <Text>{i18n.t('onboarding.loginWithEmailButton')}</Text>
+          <Text>{i18n.t('onboarding.registerWithEmailButton')}</Text>
         </Button>
         <View className="w-full flex-row items-center">
           <View className="flex-1">

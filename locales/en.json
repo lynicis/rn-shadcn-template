@@ -62,7 +62,7 @@
   "onboarding": {
     "headerTitle": "Onboarding",
     "title": "Onboarding",
-    "loginWithEmailButton": "Sign in with email",
+    "registerWithEmailButton": "Sign up with email",
     "seperator": "or",
     "haveAccountQuestion": "Do you have an account?",
     "signInLink": "Sign In"
