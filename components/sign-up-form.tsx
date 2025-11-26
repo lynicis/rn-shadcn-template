@@ -118,7 +118,7 @@ export function SignUpForm() {
                 control={control}
                 name="password"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <View className="relative">
+                  <View className="relative" pointerEvents="box-none">
                     <Input
                       ref={passwordInputRef}
                       id="password"
@@ -132,18 +132,24 @@ export function SignUpForm() {
                       editable={!isSubmitting}
                       className="pr-12"
                     />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onPress={() => setShowPassword(!showPassword)}
-                      disabled={isSubmitting}
-                      className="absolute right-1 top-0 h-full w-10">
-                      <Icon
-                        as={showPassword ? EyeOffIcon : EyeIcon}
-                        className="text-muted-foreground"
-                        size={20}
-                      />
-                    </Button>
+                    <View
+                      className="absolute right-1 top-0 h-full justify-center"
+                      pointerEvents="box-none">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onPress={() => setShowPassword(!showPassword)}
+                        disabled={isSubmitting}
+                        className="h-8 w-8">
+                        <View pointerEvents="none">
+                          <Icon
+                            as={showPassword ? EyeOffIcon : EyeIcon}
+                            className="text-muted-foreground"
+                            size={20}
+                          />
+                        </View>
+                      </Button>
+                    </View>
                   </View>
                 )}
               />
@@ -157,7 +163,7 @@ export function SignUpForm() {
                 control={control}
                 name="repeatPassword"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <View className="relative">
+                  <View className="relative" pointerEvents="box-none">
                     <Input
                       ref={repeatPasswordInputRef}
                       id="repeatPassword"
@@ -171,18 +177,24 @@ export function SignUpForm() {
                       editable={!isSubmitting}
                       className="pr-12"
                     />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onPress={() => setShowRepeatPassword(!showRepeatPassword)}
-                      disabled={isSubmitting}
-                      className="absolute right-1 top-0 h-full w-10">
-                      <Icon
-                        as={showRepeatPassword ? EyeOffIcon : EyeIcon}
-                        className="text-muted-foreground"
-                        size={20}
-                      />
-                    </Button>
+                    <View
+                      className="absolute right-1 top-0 h-full justify-center"
+                      pointerEvents="box-none">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onPress={() => setShowRepeatPassword(!showRepeatPassword)}
+                        disabled={isSubmitting}
+                        className="h-8 w-8">
+                        <View pointerEvents="none">
+                          <Icon
+                            as={showRepeatPassword ? EyeOffIcon : EyeIcon}
+                            className="text-muted-foreground"
+                            size={20}
+                          />
+                        </View>
+                      </Button>
+                    </View>
                   </View>
                 )}
               />

@@ -86,8 +86,7 @@ export function ResetPasswordForm() {
               testID="submit-button"
               className="w-full"
               onPress={handleSubmit(onSubmit)}
-              isLoading={isSubmitting}
-            >
+              isLoading={isSubmitting}>
               <Text>{i18n.t('resetPassword.button')}</Text>
             </Button>
           </View>
