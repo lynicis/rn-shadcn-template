@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { Session, User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 
@@ -15,11 +17,19 @@ type UserStoreActions = {
 
 type UserStore = UserStoreState & UserStoreActions;
 
-export const useUserStore = create<UserStore>((set, get) => ({
-  session: null,
-  user: null,
-  isUserAuthenticated: () => Boolean(get().session) && Boolean(get().user),
-  setSession: (session) => set((state) => ({ ...state, session })),
-  setUser: (user) => set((state) => ({ ...state, user })),
-  clearUser: () => set((state) => ({ ...state, session: null, user: null })),
-}));
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set, get) => ({
+      session: null,
+      user: null,
+      isUserAuthenticated: () => Boolean(get().session) && Boolean(get().user),
+      setSession: (session) => set({ session }),
+      setUser: (user) => set({ user }),
+      clearUser: () => set({ session: null, user: null }),
+    }),
+    {
+      name: 'user',
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);

@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextInput, View } from 'react-native';
 import { useRouter, Link } from 'expo-router';
+import { toast } from 'sonner-native';
 import * as React from 'react';
 import { z } from 'zod/v4';
 
@@ -47,30 +48,24 @@ export function SignUpForm() {
   const repeatPasswordInputRef = React.useRef<TextInput>(null);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = React.useState(false);
-  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const onSubmit = async (data: ISchema) => {
-    try {
-      setSubmitError(null);
+    const { data: authData, error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+    });
 
-      const { data: authData, error } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (error) {
-        setSubmitError(error.message);
-        return;
-      }
-
-      if (authData.user && authData.session) {
-        setUser(authData.user);
-        setSession(authData.session);
-        return router.push('/(dashboard)');
-      }
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : i18n.t('signUp.errorGeneric'));
+    if (error) {
+      return toast.error(i18n.t('signUp.errorGeneric'));
     }
+
+    setUser(authData.user);
+    setSession(authData.session);
+    toast.success(i18n.t('signUp.success'));
+    return setTimeout(() => {
+      router.dismissAll();
+      router.replace('/(dashboard)');
+    }, 600);
   };
 
   return (
@@ -202,7 +197,6 @@ export function SignUpForm() {
                 <Text variant="danger">{errors.repeatPassword.message}</Text>
               )}
             </View>
-            {submitError && <Text variant="danger">{submitError}</Text>}
             <Button className="w-full" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting}>
               <Text>{i18n.t('signUp.button')}</Text>
             </Button>

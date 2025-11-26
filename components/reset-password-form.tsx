@@ -36,12 +36,14 @@ export function ResetPasswordForm() {
     });
 
     if (error) {
-      toast.error(i18n.t('resetPassword.errorGeneric'));
-      return;
+      return toast.error(i18n.t('resetPassword.errorGeneric'));
     }
 
     toast.success(i18n.t('resetPassword.success'));
-    setTimeout(() => router.push('/(auth)/sign-in'), 600);
+    setTimeout(() => {
+      router.dismissAll();
+      router.push('/(auth)/sign-in');
+    }, 600);
   };
 
   return (

@@ -11,6 +11,7 @@
     "signInLink": "Giriş Yap",
     "or": "veya",
     "errorGeneric": "Beklenmeyen bir hata oluştu",
+    "success": "Başarıyla kayıt olundu!",
     "validation": {
       "emailInvalid": "Geçersiz e-posta adresi",
       "emailRequired": "E-posta zorunludur",
@@ -71,5 +72,8 @@
     "headerTitle": "Oops!",
     "title": "Bu sayfa bulunamadı!",
     "goBackToSignUpButton": "Kayıt ol sayfasına geri dön"
+  },
+  "dashboard": {
+    "headerTitle": "Dashboard"
   }
 }

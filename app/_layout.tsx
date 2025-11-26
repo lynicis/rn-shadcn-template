@@ -1,9 +1,9 @@
 import '../global.css';
 
+import { SplashScreen, useSegments, useRouter, Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as QueryParams from 'expo-auth-session/build/QueryParams';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { SplashScreen, useRouter, Stack } from 'expo-router';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import * as Sentry from '@sentry/react-native';
@@ -52,63 +52,85 @@ export default Sentry.wrap(function Layout() {
   const colorScheme = useColorScheme().colorScheme || 'light';
   const url = Linking.useLinkingURL();
   const router = useRouter();
+  const segments = useSegments();
 
-  const { isUserAuthenticated, setUser, setSession } = useUserStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const { setUser, setSession, clearUser } = useUserStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   if (!isLoading) {
     SplashScreen.hideAsync();
   }
 
-  if (url) {
-    createSessionFromUrl(url);
-  }
+  useEffect(() => {
+    if (url) {
+      createSessionFromUrl(url);
+    }
+  }, [url]);
 
   useEffect(() => {
+    const isOnAuthScreen = segments[0] === '(auth)' || !segments[0];
+
     const checkAuth = async () => {
-      setIsLoading(true);
-
-      const isAuthenticated = isUserAuthenticated();
-      if (isAuthenticated) {
-        const {
-          data: { user },
-          error: userError,
-        } = await supabase.auth.getUser();
-        if (userError) {
-          setIsLoading(false);
-          return;
-        }
-
+      try {
         const {
           data: { session },
           error: sessionError,
         } = await supabase.auth.getSession();
+
         if (sessionError) {
-          setIsLoading(false);
-          return;
+          setSession(null);
+          setUser(null);
+          return setIsLoading(false);
+        }
+
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
+
+        if (userError) {
+          setSession(null);
+          setUser(null);
+          return setIsLoading(false);
         }
 
         setUser(user);
         setSession(session);
         setIsLoading(false);
-        router.push('/(dashboard)');
-      } else {
+        router.replace('/(dashboard)');
+      } catch {
+        setSession(null);
+        setUser(null);
         setIsLoading(false);
       }
     };
 
-    checkAuth();
+    if (isOnAuthScreen) {
+      checkAuth();
+    }
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
+
+      if (event === 'SIGNED_IN' && session) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        setUser(user);
+        router.replace('/(dashboard)');
+      } else if (event === 'SIGNED_OUT') {
+        clearUser();
+        router.replace('/');
+      }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [isUserAuthenticated, setUser, setSession, router]);
+  }, [setUser, setSession, clearUser, router, segments]);
 
   return (
     <SafeAreaProvider>

@@ -47,16 +47,16 @@ export function SignInForm() {
     });
 
     if (error) {
-      toast.error(i18n.t('signIn.errorGeneric'));
-      return;
+      return toast.error(i18n.t('signIn.errorGeneric'));
     }
 
-    if (authData.user && authData.session) {
-      setUser(authData.user);
-      setSession(authData.session);
-      toast.success(i18n.t('signIn.success'));
-      return setTimeout(() => router.push('/(dashboard)'), 600);
-    }
+    setUser(authData.user);
+    setSession(authData.session);
+    toast.success(i18n.t('signIn.success'));
+    return setTimeout(() => {
+      router.dismissAll();
+      router.replace('/(dashboard)');
+    }, 600);
   }
 
   return (

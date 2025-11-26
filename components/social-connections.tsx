@@ -8,6 +8,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import { SplashScreen, useRouter } from 'expo-router';
 import { Platform, Image, View } from 'react-native';
 import { useColorScheme } from 'nativewind';
+import { useEffect, useRef } from 'react';
 import { toast } from 'sonner-native';
 
 import { useSecureEnv } from '@/hooks/use-secure-env';
@@ -35,19 +36,33 @@ SplashScreen.preventAutoHideAsync();
 
 export function SocialConnections() {
   const { values, isLoading } = useSecureEnv();
-  GoogleSignin.configure({
-    webClientId: values.googleWebClientId ?? '',
-    iosClientId: values.googleIosClientId ?? '',
-  });
+  const isGoogleConfigured = useRef(false);
 
   const { colorScheme } = useColorScheme();
   const router = useRouter();
 
   const { setUser, setSession } = useUserStore();
 
-  if (!isLoading) {
-    SplashScreen.hideAsync();
-  }
+  useEffect(() => {
+    if (
+      !isLoading &&
+      values.googleWebClientId &&
+      values.googleIosClientId &&
+      !isGoogleConfigured.current
+    ) {
+      GoogleSignin.configure({
+        webClientId: values.googleWebClientId,
+        iosClientId: values.googleIosClientId,
+      });
+      isGoogleConfigured.current = true;
+    }
+  }, [isLoading, values.googleWebClientId, values.googleIosClientId]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoading]);
 
   const nativeSignInWithApple = async () => {
     try {
@@ -107,9 +122,9 @@ export function SocialConnections() {
   const onAppleButtonPress = async () => {
     const isNativeSignInAvailable = await AppleAuthentication.isAvailableAsync();
     if (isNativeSignInAvailable) {
-      nativeSignInWithApple();
+      await nativeSignInWithApple();
     } else {
-      webSignInWithApple();
+      await webSignInWithApple();
     }
   };
 
@@ -128,12 +143,10 @@ export function SocialConnections() {
           return toast.error(i18n.t('signIn.errorGeneric'));
         }
 
-        if (data?.user && data?.session) {
-          setUser(data.user);
-          setSession(data.session);
-          toast.success(i18n.t('signIn.success'));
-          setTimeout(() => router.push('/(dashboard)'), 600);
-        }
+        setUser(data.user);
+        setSession(data.session);
+        toast.success(i18n.t('signIn.success'));
+        setTimeout(() => router.push('/(dashboard)'), 600);
       }
     } catch (error) {
       if (isErrorWithCode(error)) {

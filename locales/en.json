@@ -11,6 +11,7 @@
     "signInLink": "Sign in",
     "or": "or",
     "errorGeneric": "An unexpected error occurred",
+    "success": "Signed up successfully!",
     "validation": {
       "emailInvalid": "Invalid email address",
       "emailRequired": "Email is required",
@@ -71,5 +72,8 @@
     "headerTitle": "Oops!",
     "title": "This screen doesn't exists!",
     "goBackToSignUpButton": "Go back to sign up"
+  },
+  "dashboard": {
+    "headerTitle": "Dashboard"
   }
 }

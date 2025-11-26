@@ -37,8 +37,7 @@ export function ForgotPasswordForm() {
       });
 
       if (error) {
-        toast.error(i18n.t('forgotPassword.errorGeneric'));
-        return;
+        return toast.error(i18n.t('forgotPassword.errorGeneric'));
       }
 
       toast.success(i18n.t('forgotPassword.success'));
