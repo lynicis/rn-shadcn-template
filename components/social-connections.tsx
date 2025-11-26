@@ -1,10 +1,5 @@
-import {
-  isSuccessResponse,
-  isErrorWithCode,
-  GoogleSignin,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { SplashScreen, useRouter } from 'expo-router';
 import { Platform, Image, View } from 'react-native';
 import { useColorScheme } from 'nativewind';
@@ -19,17 +14,33 @@ import { expo } from '@/app.json';
 import { cn } from '@/lib/utils';
 import i18n from '@/locales';
 
+const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
+
+const getGoogleSignIn = () => {
+  if (isExpoGo) return null;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return require('@react-native-google-signin/google-signin') as typeof import('@react-native-google-signin/google-signin');
+  } catch {
+    return null;
+  }
+};
+
 const SOCIAL_CONNECTION_STRATEGIES = [
   {
     type: 'oauth_apple',
     source: { uri: 'https://img.clerk.com/static/apple.png?width=160' },
     useTint: true,
   },
-  {
-    type: 'oauth_google',
-    source: { uri: 'https://img.clerk.com/static/google.png?width=160' },
-    useTint: false,
-  },
+  ...(!isExpoGo
+    ? [
+        {
+          type: 'oauth_google',
+          source: { uri: 'https://img.clerk.com/static/google.png?width=160' },
+          useTint: false,
+        },
+      ]
+    : []),
 ];
 
 SplashScreen.preventAutoHideAsync();
@@ -44,13 +55,15 @@ export function SocialConnections() {
   const { setUser, setSession } = useUserStore();
 
   useEffect(() => {
+    const googleSignIn = getGoogleSignIn();
     if (
+      googleSignIn &&
       !isLoading &&
       values.googleWebClientId &&
       values.googleIosClientId &&
       !isGoogleConfigured.current
     ) {
-      GoogleSignin.configure({
+      googleSignIn.GoogleSignin.configure({
         webClientId: values.googleWebClientId,
         iosClientId: values.googleIosClientId,
       });
@@ -129,6 +142,14 @@ export function SocialConnections() {
   };
 
   const onGoogleButtonPress = async () => {
+    const googleSignIn = getGoogleSignIn();
+    if (!googleSignIn) {
+      toast.error('Google Sign-in is not available in Expo Go. Please use a development build.');
+      return;
+    }
+
+    const { GoogleSignin, isSuccessResponse, isErrorWithCode, statusCodes } = googleSignIn;
+
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();

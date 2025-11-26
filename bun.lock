@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "pee-spot",
+      "name": "rn-shadcn-template",
       "dependencies": {
         "@expo/vector-icons": "^15.0.2",
         "@hookform/resolvers": "^5.2.2",
